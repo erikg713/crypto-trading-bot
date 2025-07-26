@@ -2,6 +2,23 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 from src.collectors.fetch_historical import fetch_ohlcv
 from src.features.feature_engineer import generate_features
+from src.collectors.fetch_historical import fetch_ohlcv
+from src.features.feature_engineer import generate_features
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+
+def train_model():
+    df = fetch_ohlcv()
+    X, y = generate_features(df)
+
+    model = RandomForestClassifier(n_estimators=100)
+    model.fit(X, y)
+
+    joblib.dump(model, "models/signal_model.pkl")
+    print("✅ Model trained and saved.")
+
+if __name__ == "__main__":
+    train_model()
 
 def train():
     df = fetch_ohlcv("BTCUSDT")
