@@ -4,7 +4,11 @@ from src.collectors.fetch_historical import fetch_ohlcv
 import joblib
 from src.collectors.fetch_historical import fetch_ohlcv
 from src.features.feature_engineer import generate_features
-
+# predict_signals.py
+def predict(live_df):
+    model = joblib.load('models/signal_model.pkl')
+    X = generate_live_features(live_df)
+    return model.predict(X), model.predict_proba(X)
 model = joblib.load("models/signal_model.pkl")
 
 def get_latest_signal():
