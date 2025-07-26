@@ -1,3 +1,9 @@
+# feature_engineer.py
+def generate_features(df):
+    df = add_indicators(df)
+    # Label: 1 if price increases by >x% in 15 mins
+    df["target"] = (df["close"].shift(-3) > df["close"] * 1.01).astype(int)
+    return df.dropna(), df["target"].dropna()
 import ta
 import pandas as pd
 from src.features.indicators import add_indicators
