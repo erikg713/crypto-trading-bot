@@ -1,1 +1,10 @@
-
+pandas
+numpy
+ta
+lightgbm
+joblib
+sqlalchemy
+psycopg2-binary
+python-binance
+python-dotenv
+schedule
