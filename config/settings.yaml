@@ -3,7 +3,7 @@ binance:
   api_secret: "YOUR_BINANCE_SECRET"
 
 trade:
-  symbol: "BTCUSDT"
+  symbol: "BTCETH"
   trade_amount: 0.001
   confidence_threshold: 0.75
   interval: "15m"
