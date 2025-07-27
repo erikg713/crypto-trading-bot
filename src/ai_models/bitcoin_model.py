@@ -3,6 +3,13 @@
 import pandas as pd
 import joblib
 import os
+import pandas as pd
+
+def predict(df: pd.DataFrame) -> int:
+    # 1 = BUY, -1 = SELL, 0 = HOLD
+    if len(df) < 2:
+        return 0
+    return 1 if df["close"].iloc[-1] > df["close"].iloc[-2] else -1
 
 MODEL_PATH = "models/btc_model.pkl"
 
