@@ -10,3 +10,5 @@ python-dotenv
 schedule
 openai
 pyinstaller
+requests
+scikit-learn
