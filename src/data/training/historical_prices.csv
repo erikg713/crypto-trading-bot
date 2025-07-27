@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 
 # Set random seed for reproducibility
 np.random.seed(42)
-
 # Generate synthetic BTC/USDT OHLCV data for 365 days
 start_date = datetime.strptime("2024-07-01", "%Y-%m-%d")
 days = 365
