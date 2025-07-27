@@ -1,24 +1,20 @@
-import os
-import alpaca_trade_api as tradeapi
+# src/data/collectors/alpaca_data.py
+
+from src.api_clients.alpaca_client import get_alpaca_client
 import pandas as pd
 
-ALPACA_API_KEY = os.getenv("ALPACA_API_KEY", "")
-ALPACA_SECRET_KEY = os.getenv("ALPACA_SECRET_KEY", "")
-BASE_URL = "https://paper-api.alpaca.markets"
+def fetch_stock_ohlcv(symbol="AAPL", timeframe="1D", limit=100) -> pd.DataFrame:
+    client = get_alpaca_client()
+    barset = client.get_bars(symbol, timeframe, limit=limit)
+    data = barset.df[symbol]
 
-api = tradeapi.REST(ALPACA_API_KEY, ALPACA_SECRET_KEY, BASE_URL, api_version='v2')
+    df = pd.DataFrame()
+    df["timestamp"] = data.index
+    df["open"] = data["open"]
+    df["high"] = data["high"]
+    df["low"] = data["low"]
+    df["close"] = data["close"]
+    df["volume"] = data["volume"]
 
-def fetch_stock_ohlcv(symbol: str, timeframe: str = '1D', limit: int = 100):
-    barset = api.get_barset(symbol, timeframe, limit=limit)
-    bars = barset[symbol]
-    data = [{
-        'time': b.t.isoformat(),
-        'open': b.o,
-        'high': b.h,
-        'low': b.l,
-        'close': b.c,
-        'volume': b.v
-    } for b in bars]
-    return pd.DataFrame(data).set_index('time').astype(float)
-
-# Options data requires separate provider; stub for future.
+    df.set_index("timestamp", inplace=True)
+    return df
