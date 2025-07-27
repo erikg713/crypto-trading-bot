@@ -8,6 +8,15 @@ from src.ai_models.stocks_model import predict as stock_predict
 from src.executors.crypto_executor import execute_crypto_trade
 from src.executors.stock_executor import execute_stock_trade
 from src.utils.scheduler import JobScheduler
+from src.main import trading_job
+from src.utils.scheduler import JobScheduler
+from src.db.db_utils import init_db
+
+if __name__ == "__main__":
+    init_db()
+    scheduler = JobScheduler()
+    scheduler.add_job(trading_job, every=15, unit='minutes', job_name='Multi-Asset Trading Job')
+    scheduler.run_forever()
 
 def trading_job():
     # Crypto BTC
