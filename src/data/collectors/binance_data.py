@@ -16,4 +16,3 @@ def fetch_ohlcv(symbol="BTCUSDT", interval="15m", limit=100):
     ])
     df["close"] = df["close"].astype(float)
     return df
-
