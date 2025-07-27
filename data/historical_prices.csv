@@ -1,5 +1,3 @@
-
-df.head(), df.to_csv("/mnt/data/historical_prices.csv", index=False)
 Result
 (             timestamp      open      high       low     close  volume
  0  2024-07-01 00:00:00  30248.36  30437.80  30077.80  30347.67  127.48
