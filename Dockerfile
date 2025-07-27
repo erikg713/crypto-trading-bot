@@ -1,17 +1,25 @@
-# Base image
 FROM python:3.11-slim
 
-# Set workdir
+# System dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    curl \
+    git \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
 WORKDIR /app
 
-# Copy code
-COPY . /app
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy project files
+COPY . .
 
-# Expose ports if dashboard is enabled
-EXPOSE 8501
+# Jupyter config (expose)
+EXPOSE 8888
 
-# Run main script
-CMD ["python", "src/main.py"]
+# Default command: start Jupyter
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser"]
