@@ -61,5 +61,9 @@ Run: python src/app.py
 ### TRAIN PIPELINE ###
 ```
 python3 train_pipeline.py
+---
+```
+python train_pipeline.py --data_path data/historical_prices.csv --model_dir models
+
 
 
