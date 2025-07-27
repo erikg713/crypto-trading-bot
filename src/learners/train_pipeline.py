@@ -7,49 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
 import joblib
-import argparse
-import logging
-import os
-import pandas as pd
+
+# Assuming your custom feature engineering is in this module
 from src.features.feature_engineer import generate_features
-from src.learners.model_utils import train_model, save_model
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-def main(data_path, model_dir):
-    logging.info(f"Loading data from {data_path}")
-    df = pd.read_csv(data_path)
-
-    logging.info("Generating features and labels")
-    features, labels = generate_features(df)
-
-    logging.info("Training model")
-    model, scaler, _, _ = train_model(features, labels)
-
-    os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "trading_model.pkl")
-    scaler_path = os.path.join(model_dir, "scaler.pkl")
-
-    logging.info("Saving model and scaler")
-    save_model(model, scaler, model_path, scaler_path)
-
-    logging.info("Training pipeline complete.")
-
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="Train crypto price prediction model")
-    parser.add_argument("--data_path", type=str, default="data/historical_prices.csv")
-    parser.add_argument("--model_dir", type=str, default="models")
-    args = parser.parse_args()
-
-    main(args.data_path, args.model_dir)
-
-from feature_engineer import generate_features
-
-# Setup basic logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
-def main(data_path, model_dir):
+def main(data_path: str, model_dir: str):
     logging.info(f"Loading data from {data_path}")
     df = pd.read_csv(data_path)
 
