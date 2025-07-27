@@ -1,1 +1,12 @@
+{
+  "models": [
+    {
+      "name": "random_forest",
+      "version": "1.0",
+      "path": "src/data/models/checkpoints/model_v1.pkl",
+      "accuracy": 0.84,
+      "date_trained": "2025-07-27"
+    }
+  ]
+}
 
