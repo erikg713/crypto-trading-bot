@@ -15,3 +15,8 @@ bash
 Copy
 Edit
 pytest tests/
+pip install pandas
+pip install matplotlib
+seaborn 
+scikit-learn 
+joblib
