@@ -1,0 +1,39 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, accuracy_score
+import joblib
+
+from feature_engineer import generate_features
+
+def main():
+    # 1. Load raw historical price data (update path as needed)
+    df = pd.read_csv("data/historical_prices.csv")
+
+    # 2. Generate features and labels
+    features, labels = generate_features(df)
+
+    # 3. Split into train/test (80% train, 20% test)
+    X_train, X_test, y_train, y_test = train_test_split(
+        features, labels, test_size=0.2, random_state=42, stratify=labels
+    )
+
+    # 4. Initialize model (can replace with any model)
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+    # 5. Train model
+    model.fit(X_train, y_train)
+
+    # 6. Predict on test set
+    y_pred = model.predict(X_test)
+
+    # 7. Evaluate performance
+    print("Accuracy:", accuracy_score(y_test, y_pred))
+    print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+    # 8. Save the trained model to disk
+    joblib.dump(model, "models/trading_model.pkl")
+    print("Model saved to models/trading_model.pkl")
+
+if __name__ == "__main__":
+    main()
