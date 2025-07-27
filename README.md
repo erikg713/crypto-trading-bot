@@ -51,3 +51,11 @@ Can extend to stocks & options by adding your own AI models and executors.
 
 Modular and clean structure for expandability.
 
+✅ How to Run
+Ensure API keys are set for Binance and Alpaca.
+
+pip install sqlalchemy binance alpaca_trade_api pandas
+
+Run: python src/app.py
+
+
