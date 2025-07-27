@@ -1,12 +1,11 @@
 # src/main.py
-
+import os
 import time
 import yaml
 from src.learners.predict_signals import get_latest_signal
 from src.executors.trade_manager import place_order
 from src.executors.risk_controls import validate_risk
 from src.collectors.binance_client import get_binance_client
-import os
 from datetime import datetime
 from src.db.db_utils import init_db
 from src.data.collectors.alpaca_data import fetch_stock_ohlcv
