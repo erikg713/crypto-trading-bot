@@ -2,7 +2,25 @@ from binance.client import Client
 import os
 from src.collectors.binance_client import client
 import yaml
+# src/executors/trade_manager.py
 
+from binance.enums import *
+from src.collectors.binance_client import get_binance_client
+
+client = get_binance_client()
+
+def execute_trade(symbol: str, action: str, quantity: float):
+    if action == "buy":
+        print(f"🔼 Placing BUY order: {symbol} {quantity}")
+        return client.order_market_buy(symbol=symbol, quantity=quantity)
+
+    elif action == "sell":
+        print(f"🔽 Placing SELL order: {symbol} {quantity}")
+        return client.order_market_sell(symbol=symbol, quantity=quantity)
+
+    else:
+        print(f"⚪ No trade executed (action: {action})")
+        return None
 with open("config/settings.yaml") as f:
     config = yaml.safe_load(f)
 
