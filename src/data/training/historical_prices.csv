@@ -1,31 +1,13 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-
-# Set random seed for reproducibility
-np.random.seed(42)
-# Generate synthetic BTC/USDT OHLCV data for 365 days
-start_date = datetime.strptime("2024-07-01", "%Y-%m-%d")
-days = 365
-dates = [start_date + timedelta(days=i) for i in range(days)]
-
-# Generate price data
-base_price = 30000
-open_prices = [base_price + np.random.normal(0, 500) for _ in range(days)]
-high_prices = [open + np.random.uniform(100, 500) for open in open_prices]
-low_prices = [open - np.random.uniform(100, 500) for open in open_prices]
-close_prices = [np.random.uniform(low, high) for low, high in zip(low_prices, high_prices)]
-volumes = np.random.uniform(100, 200, size=days)
-
-# Create DataFrame
-df = pd.DataFrame({
-    "timestamp": [dt.strftime("%Y-%m-%d %H:%M:%S") for dt in dates],
-    "open": np.round(open_prices, 2),
-    "high": np.round(high_prices, 2),
-    "low": np.round(low_prices, 2),
-    "close": np.round(close_prices, 2),
-    "volume": np.round(volumes, 2)
-})
-
 # Display a sample and save to file path
 df.head(), df.to_csv("/mnt/data/historical_prices.csv", index=False)
+Result
+(             timestamp      open      high       low     close  volume
+ 0  2024-07-01 00:00:00  30248.36  30437.80  30077.80  30347.67  127.48
+ 1  2024-07-02 00:00:00  29930.87  30416.16  29631.52  29733.59  182.26
+ 2  2024-07-03 00:00:00  30323.84  30428.71  30056.27  30338.68  142.37
+ 3  2024-07-04 00:00:00  30761.51  31249.47  30295.58  30319.03  166.75
+ 4  2024-07-05 00:00:00  29882.92  30000.19  29637.97  29645.98  109.55,
+ None)
