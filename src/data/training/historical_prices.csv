@@ -6,7 +6,7 @@ import joblib
 
 from feature_engineer import generate_features
 
-def main()
+def main
     # 1. Load raw historical price data (update path as needed)
     df = pd.read_csv("data/historical_prices.csv")
 
