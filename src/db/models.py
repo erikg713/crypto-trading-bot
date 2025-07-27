@@ -1,6 +1,27 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
+from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class Wallet(Base):
+    __tablename__ = 'wallets'
+    id = Column(Integer, primary_key=True)
+    asset = Column(String, unique=True, index=True)
+    balance = Column(Float, default=0.0)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+
+class Trade(Base):
+    __tablename__ = 'trades'
+    id = Column(Integer, primary_key=True)
+    symbol = Column(String, index=True)
+    trade_type = Column(String)   # 'buy' or 'sell'
+    price = Column(Float)
+    quantity = Column(Float)
+    timestamp = Column(DateTime, default=datetime.utcnow)
 
 Base = declarative_base()
 
