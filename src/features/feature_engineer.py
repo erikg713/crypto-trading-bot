@@ -1,6 +1,21 @@
 import pandas as pd
 import yaml
 from src.features.indicators import add_indicators
+from config import config
+
+def generate_features(df: pd.DataFrame):
+    df = add_indicators(df)
+
+    shift = config.get("model", {}).get("target_shift", 3)
+    features_list = config.get("model", {}).get("feature_columns", ['rsi', 'ema_10', 'macd'])
+
+    df['target'] = (df['close'].shift(-shift) > df['close']).astype(int)
+    df.dropna(inplace=True)
+
+    features = df[features_list]
+    labels = df['target']
+
+    return features, labels
 
 # Load config once globally
 with open("config/settings.yaml") as f:
