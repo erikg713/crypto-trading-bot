@@ -1,39 +1,65 @@
+import argparse
+import logging
+import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
 import joblib
 
 from feature_engineer import generate_features
 
-def main():
-    # 1. Load raw historical price data (update path as needed)
-    df = pd.read_csv("data/historical_prices.csv")
+# Setup basic logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-    # 2. Generate features and labels
+def main(data_path, model_dir):
+    logging.info(f"Loading data from {data_path}")
+    df = pd.read_csv(data_path)
+
+    logging.info("Generating features and labels")
     features, labels = generate_features(df)
 
-    # 3. Split into train/test (80% train, 20% test)
+    logging.info("Splitting dataset into train and test")
     X_train, X_test, y_train, y_test = train_test_split(
         features, labels, test_size=0.2, random_state=42, stratify=labels
     )
 
-    # 4. Initialize model (can replace with any model)
+    logging.info("Scaling features")
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    logging.info("Training RandomForestClassifier")
     model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train_scaled, y_train)
 
-    # 5. Train model
-    model.fit(X_train, y_train)
+    logging.info("Evaluating model")
+    y_pred = model.predict(X_test_scaled)
+    acc = accuracy_score(y_test, y_pred)
+    logging.info(f"Test Accuracy: {acc:.4f}")
+    logging.info(f"\nClassification Report:\n{classification_report(y_test, y_pred)}")
 
-    # 6. Predict on test set
-    y_pred = model.predict(X_test)
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, "trading_model.pkl")
+    scaler_path = os.path.join(model_dir, "scaler.pkl")
 
-    # 7. Evaluate performance
-    print("Accuracy:", accuracy_score(y_test, y_pred))
-    print("\nClassification Report:\n", classification_report(y_test, y_pred))
+    logging.info(f"Saving model to {model_path}")
+    joblib.dump(model, model_path)
 
-    # 8. Save the trained model to disk
-    joblib.dump(model, "models/trading_model.pkl")
-    print("Model saved to models/trading_model.pkl")
+    logging.info(f"Saving scaler to {scaler_path}")
+    joblib.dump(scaler, scaler_path)
+
+    logging.info("Training pipeline complete.")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Train crypto price prediction model")
+    parser.add_argument(
+        "--data_path", type=str, default="data/historical_prices.csv", help="CSV file path for raw data"
+    )
+    parser.add_argument(
+        "--model_dir", type=str, default="models", help="Directory to save trained model and scaler"
+    )
+    args = parser.parse_args()
+
+    main(args.data_path, args.model_dir)
