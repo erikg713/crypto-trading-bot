@@ -1,15 +1,15 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-
+```
 # Set random seed for reproducibility
 np.random.seed(42)
-
+```
 # Generate synthetic BTC/USDT OHLCV data for 365 days
 start_date = datetime.strptime("2024-07-01", "%Y-%m-%d")
 days = 365
 dates = [start_date + timedelta(days=i) for i in range(days)]
-
+```
 # Generate price data
 base_price = 30000
 open_prices = [base_price + np.random.normal(0, 500) for _ in range(days)]
