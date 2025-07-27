@@ -3,6 +3,18 @@ import pandas as pd
 from contextlib import contextmanager
 from dotenv import load_dotenv
 import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from src.db.models import Base
+
+engine = create_engine('sqlite:///trading_bot.db', echo=False)
+SessionLocal = sessionmaker(bind=engine)
+
+def init_db():
+    Base.metadata.create_all(bind=engine)
+
+def get_db_session():
+    return SessionLocal()
 
 # Load environment variables
 load_dotenv()
