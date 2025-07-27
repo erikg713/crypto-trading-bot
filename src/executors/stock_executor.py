@@ -8,7 +8,13 @@ def execute_stock_trade(symbol, qty, side):
     if order:
         print(f"Stock trade executed: {order}")
         session = get_db_session()
-        trade = Trade(symbol=symbol, trade_type=side, price=float(order.filled_avg_price or 0), quantity=qty, timestamp=datetime.utcnow())
+        trade = Trade(
+            symbol=symbol,
+            trade_type=side,
+            price=float(order.filled_avg_price or 0),
+            quantity=qty,
+            timestamp=datetime.utcnow()
+        )
         session.add(trade)
         session.commit()
         session.close()
@@ -16,4 +22,3 @@ def execute_stock_trade(symbol, qty, side):
     else:
         print("Stock trade failed")
         return False
-
