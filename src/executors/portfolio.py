@@ -5,6 +5,27 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
+from src.executors.risk_controls import validate_risk
+
+class PortfolioManager:
+    # ... existing methods ...
+
+    def execute_trade(self, symbol: str, trade_type: str, price: float, amount_usdt: float):
+        available = self.get_balance('USDT')
+        if not validate_risk(available, amount_usdt):
+            return False
+
+        # Calculate quantity from amount_usdt
+        qty = amount_usdt / price
+
+        # Deduct USDT, add asset to wallet
+        self.update_balance('USDT', -amount_usdt)
+        self.update_balance(symbol, qty)
+
+        # Record the trade
+        self.record_trade(symbol, trade_type, price, qty)
+        return True
+
 
 class PortfolioManager:
     def __init__(self, db: Session):
