@@ -65,5 +65,12 @@ python3 train_pipeline.py
 ```
 python train_pipeline.py --data_path data/historical_prices.csv --model_dir models
 
+--------------------------
+## INFERENCE ##
+----------------------
+```
+python inference.py --data_path data/new_prices.csv --output_path predictions.csv
+```
+
 
 
