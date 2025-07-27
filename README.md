@@ -58,4 +58,8 @@ pip install sqlalchemy binance alpaca_trade_api pandas
 
 Run: python src/app.py
 
+### TRAIN PIPELINE ###
+```
+python3 train_pipeline.py
+
 
