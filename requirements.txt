@@ -13,3 +13,4 @@ pyinstaller
 requests
 scikit-learn
 rich
+pyyaml
