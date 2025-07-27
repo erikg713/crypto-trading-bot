@@ -12,3 +12,4 @@ openai
 pyinstaller
 requests
 scikit-learn
+rich
