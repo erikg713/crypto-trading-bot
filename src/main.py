@@ -1,3 +1,48 @@
+# src/main.py
+
+import time
+from src.learners.predict_signals import predict
+from src.executors.trade_manager import execute_trade
+from src.executors.risk_controls import validate_risk
+from src.collectors.binance_client import get_binance_client
+
+# Parameters
+SYMBOL = "BTCUSDT"
+QUANTITY = 0.001  # Adjust based on asset and risk
+INTERVAL_SECONDS = 60 * 15  # Every 15 minutes
+
+def get_available_usdt():
+    client = get_binance_client()
+    balances = client.get_asset_balance(asset='USDT')
+    return float(balances['free'])
+
+def run_bot():
+    print("🚀 Starting Crypto Trading Bot...")
+
+    while True:
+        try:
+            print("\n🔎 Checking market signal...")
+            action, confidence = predict()
+            print(f"Decision: {action.upper()} | Confidence: {confidence:.2f}")
+
+            if action == "buy":
+                usdt = get_available_usdt()
+                if validate_risk(usdt, QUANTITY * 20000):  # Approximate price scaling
+                    execute_trade(SYMBOL, action, QUANTITY)
+                else:
+                    print("🛑 Trade skipped due to risk constraints.")
+            else:
+                print("💤 Holding position. No action taken.")
+
+        except Exception as e:
+            print(f"❌ ERROR: {e}")
+
+        print(f"⏳ Waiting {INTERVAL_SECONDS // 60} minutes...\n")
+        time.sleep(INTERVAL_SECONDS)
+
+if __name__ == "__main__":
+    run_bot()
+
 import time
 from src.learners.predict_signals import get_latest_signal
 from src.executors.trade_manager import place_order
