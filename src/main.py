@@ -5,6 +5,30 @@ from src.learners.predict_signals import predict
 from src.executors.trade_manager import execute_trade
 from src.executors.risk_controls import validate_risk
 from src.collectors.binance_client import get_binance_client
+from src.collectors.fetch_historical import fetch_ohlcv
+from src.models.predictor import TradingModel
+
+def prepare_features(df):
+    # Example feature engineering — replace with the actual features used for training
+    df["return"] = df["close"].pct_change()
+    df["ma5"] = df["close"].rolling(window=5).mean()
+    df["ma20"] = df["close"].rolling(window=20).mean()
+    df["volatility"] = df["close"].rolling(window=10).std()
+    df = df.dropna()
+
+    return df[["return", "ma5", "ma20", "volatility"]]
+
+def main():
+    print("📈 Fetching OHLCV for BTCUSDT...")
+    df = fetch_ohlcv("BTCUSDT", interval="15m", limit=100)
+    features = prepare_features(df)
+
+    print("🤖 Loading trading model...")
+    model = TradingModel()
+
+    print("🔮 Making predictions...")
+    prediction = model.predict(features)
+    print(prediction[-10:])  # Show last 10 predictions
 
 # Parameters
 SYMBOL = "BTCUSDT"
