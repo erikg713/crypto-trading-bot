@@ -72,5 +72,11 @@ python train_pipeline.py --data_path data/historical_prices.csv --model_dir mode
 python inference.py --data_path data/new_prices.csv --output_path predictions.csv
 ```
 
+---------------------------
+## RUN DASHBOARD ##
+--------------------------
+```
+streamlit run app.py
+```
 
 
