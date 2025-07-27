@@ -1,34 +1,7 @@
 import schedule
-import time
 import threading
+import time
 from typing import Callable, Union
-import time
-import threading
-
-class JobScheduler:
-    def __init__(self):
-        self.jobs = []
-
-    def add_job(self, func, every=1, unit="seconds", job_name=None):
-        self.jobs.append({"func": func, "interval": self._unit_to_seconds(every, unit), "name": job_name, "last_run": 0})
-
-    def _unit_to_seconds(self, every, unit):
-        units = {"seconds":1, "minutes":60, "hours":3600, "days":86400}
-        return every * units.get(unit, 1)
-
-    def run_forever(self):
-        print("Scheduler started...")
-        try:
-            while True:
-                now = time.time()
-                for job in self.jobs:
-                    if now - job["last_run"] >= job["interval"]:
-                        print(f"Running job: {job['name']}")
-                        threading.Thread(target=job["func"]).start()
-                        job["last_run"] = now
-                time.sleep(1)
-        except KeyboardInterrupt:
-            print("Scheduler stopped.")
 
 class JobScheduler:
     def __init__(self):
@@ -65,18 +38,12 @@ class JobScheduler:
         return wrapped
 
     def run_forever(self, interval: float = 1.0):
-        """
-        Run the scheduler in the current thread (blocking).
-        """
         print("[🚀 Scheduler Started]")
         while True:
             schedule.run_pending()
             time.sleep(interval)
 
     def run_async(self, interval: float = 1.0):
-        """
-        Run the scheduler in a background thread.
-        """
         thread = threading.Thread(target=self.run_forever, args=(interval,), daemon=True)
         thread.start()
         print("[🔁 Scheduler Running in Background]")
