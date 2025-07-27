@@ -8,11 +8,15 @@ trade:
   confidence_threshold: 0.75
   interval: "15m"
 
-model:
-  target_shift: 3
-
 trade:
   symbol: "BTCUSDT"
   quantity: 0.001
   confidence_threshold: 0.75
   interval: "15m"
+
+model:
+  target_shift: 3
+  feature_columns:
+    - rsi
+    - ema_10
+    - macd
