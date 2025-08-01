@@ -14,3 +14,11 @@ requests
 scikit-learn
 rich
 pyyaml
+ccxt
+alpaca-trade-api
+pandas
+numpy
+tensorflow
+matplotlib
+
+
