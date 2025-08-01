@@ -25,6 +25,16 @@ An AI-powered trading bot that automates crypto (and future stock/option) strate
 
 📊 Live performance dashboard (Optional GUI or CLI-based)
 
+BUY if:
+ - AI model predicts upward trend with high confidence
+ - AND RSI < 40 (supportive oversold condition)
+
+SELL if:
+ - AI model predicts downward trend
+ - OR RSI > 70 (overbought)
+
+HOLD otherwise
+
 ---
 ------------------------
 📂 Directory Structure
