@@ -119,6 +119,23 @@ class RiskManager:
 python main.py --exchange binance --strategy moving_average --backtest
 ```
 ---
+-------
+✅ RSI-based strategy module added!
+-------
+
+How it works:
+
+Computes the Relative Strength Index (RSI) over a 14-period window.
+
+Executes:
+
+BUY when RSI < 30 (oversold),
+
+SELL when RSI > 70 (overbought),
+
+HOLD otherwise.
+
+---
 -------------------
 ### 📊 Roadmap ###
 -------------------
