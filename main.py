@@ -2,7 +2,19 @@
 import argparse
 from strategies.rsi_strategy import RSIStrategy
 from visuals.backtest_plot import plot_rsi_strategy
+# main.py (simplified)
+import pandas as pd
+from strategies.rsi_ai_strategy import RSIAIStrategy
+from utils.exchange_api import fetch_candles
 
+df = fetch_candles(symbol='BTC/USDT', timeframe='1h', limit=200)
+strategy = RSIAIStrategy()
+strategy.train(df)
+
+for i in range(50, len(df)):
+    window = df.iloc[i-50:i]
+    signal = strategy.decide(window)
+    print(f"[{df.index[i]}] Signal: {signal}")
 ...
 
 if args.strategy == 'rsi':
