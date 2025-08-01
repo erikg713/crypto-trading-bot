@@ -1,13 +1,13 @@
 ---
-
-🤖 AI-CryptoTrader
-
+--------------------------------
+#### 🤖 AI-CryptoTrader ####
+--------------------------------
 An AI-powered trading bot that automates crypto (and future stock/option) strategies with real-time data analysis, multi-exchange support, and modular design for seamless expansion.
 
-
 ---
-
-✨ Features
+----------------------
+### ✨ Features ###
+----------------------
 
 ✅ Multi-exchange support (Binance, Alpaca — extendable)
 
@@ -25,12 +25,11 @@ An AI-powered trading bot that automates crypto (and future stock/option) strate
 
 📊 Live performance dashboard (Optional GUI or CLI-based)
 
-
-
 ---
-
+------------------------
 📂 Directory Structure
-
+------------------------
+```
 ai-crypto-trader/
 ├── exchanges/
 │   ├── binance.py
@@ -52,29 +51,27 @@ ai-crypto-trader/
 │   └── trade_log.txt
 ├── main.py
 └── README.md
-
-
+```
 ---
 
-🚀 Quick Start
-
+------------------------
+### 🚀 Quick Start ###
+------------------------
+---
 1. Clone the repository
 
-
-
+```
 git clone https://github.com/your-username/ai-crypto-trader.git
 cd ai-crypto-trader
-
+```
+---
 2. Install dependencies
 
-
-
+```
 pip install -r requirements.txt
-
+```
 3. Configure exchange keys
-
-
-
+```
 # config/settings.yaml
 binance:
   api_key: "YOUR_BINANCE_KEY"
@@ -83,35 +80,34 @@ binance:
 alpaca:
   api_key: "YOUR_ALPACA_KEY"
   api_secret: "YOUR_ALPACA_SECRET"
-
+```
 4. Run the bot
-
-
-
+```
 python main.py --exchange binance --strategy moving_average
-
-
+```
 ---
-
+-------------------
 🧠 Strategy System
-
+-------------------
+---
 Strategies are pluggable via the strategies/ module. Example:
-
+```
 class MovingAverageStrategy(BaseStrategy):
     def generate_signal(self, data):
         short_ma = data['close'].rolling(window=5).mean()
         long_ma = data['close'].rolling(window=20).mean()
-        if short_ma[-1] > long_ma[-1]:
+        if short_ma[-1] > long_ma[-1]
             return "BUY"
         elif short_ma[-1] < long_ma[-1]:
             return "SELL"
         return "HOLD"
-
+```
 
 ---
-
+---------------------------
 🛡️ Risk Management Example
-
+---------------------------
+```
 class RiskManager:
     def apply(self, position, price):
         if position.pnl_percent <= -5:
@@ -119,11 +115,13 @@ class RiskManager:
         elif position.pnl_percent >= 10:
             return "TAKE_PROFIT"
         return None
-
+```
 
 ---
-
-📊 Roadmap
+-------------------
+### 📊 Roadmap ###
+-------------------
+---
 
 [x] Binance support
 
@@ -139,20 +137,18 @@ class RiskManager:
 
 [ ] Options trading support
 
-
-
 ---
-
-📄 License
-
+-----------------
+## 📄 License ##
+-----------------
+---
 MIT License. Use at your own risk. Crypto trading involves significant risk.
 
-
 ---
-
-🤝 Contributions
+-----------------------
+## 🤝 Contributions ##
+-----------------------
 
 Contributions welcome! Fork the repo and submit a PR.
-
 
 ---
