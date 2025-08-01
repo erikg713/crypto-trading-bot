@@ -1,5 +1,17 @@
 # main.py
 import argparse
+from strategies.rsi_strategy import RSIStrategy
+from visuals.backtest_plot import plot_rsi_strategy
+
+...
+
+if args.strategy == 'rsi':
+    strategy = RSIStrategy()
+    df = fetch_historical_data(args.exchange)
+    df_signals = strategy.generate_signals(df)
+
+    if args.backtest:
+        plot_rsi_strategy(df_signals)
 from core.trader import Trader
 elif args.strategy == 'hybrid_rsi_ai':
     from strategies.hybrid_rsi_ai_strategy import HybridRSIAIStrategy
