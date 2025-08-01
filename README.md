@@ -116,7 +116,8 @@ class RiskManager:
             return "TAKE_PROFIT"
         return None
 ```
-
+python main.py --exchange binance --strategy moving_average --backtest
+```
 ---
 -------------------
 ### 📊 Roadmap ###
