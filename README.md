@@ -1,109 +1,143 @@
-crypto-trading-bot — README.md
+---
 
-----------------------------
-🚀 Project Overview
-----------------------------
-AI-powered crypto trading bot that automates trading strategies.
+🤖 AI-CryptoTrader
 
-Supports multiple exchanges (Binance, Alpaca).
-
-Features:
-
-Real-time market data fetching.
-
-Automated order execution.
-
-Risk management with stop-loss and take-profit.
-
-Customizable strategy implementation.
+An AI-powered trading bot that automates crypto (and future stock/option) strategies with real-time data analysis, multi-exchange support, and modular design for seamless expansion.
 
 
-Modular, clean codebase designed for easy expansion to stocks/options.
+---
 
+✨ Features
 
-⚙️ Features
+✅ Multi-exchange support (Binance, Alpaca — extendable)
 
-Multi-exchange support.
+📈 Real-time market data streaming and analysis
 
-Real-time data analysis.
+🧠 AI/Custom strategy plug-ins (e.g., Moving Average Crossover, RSI, Reinforcement Learning)
 
-Order execution automation.
+🧾 Automated order execution
 
-Risk management tools.
+🛡️ Risk management (Stop-loss, Take-profit, Trailing Stop)
 
-Custom strategy support.
+⚙️ Modular codebase – plug in new assets, strategies, and exchanges
+
+🔧 Backtesting engine (Coming soon)
+
+📊 Live performance dashboard (Optional GUI or CLI-based)
 
 
 
 ---
 
-🛠️ Installation & Setup
+📂 Directory Structure
 
-1. Clone repo:
+ai-crypto-trader/
+├── exchanges/
+│   ├── binance.py
+│   ├── alpaca.py
+│   └── base_exchange.py
+├── strategies/
+│   ├── moving_average.py
+│   ├── rsi_strategy.py
+│   └── base_strategy.py
+├── risk/
+│   └── risk_manager.py
+├── core/
+│   ├── trader.py
+│   ├── data_streamer.py
+│   └── order_executor.py
+├── config/
+│   └── settings.yaml
+├── logs/
+│   └── trade_log.txt
+├── main.py
+└── README.md
 
-git clone https://github.com/erikg713/crypto-trading-bot.git
-cd crypto-trading-bot
+
+---
+
+🚀 Quick Start
+
+1. Clone the repository
 
 
-2. Create and activate a virtual environment (recommended):
 
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+git clone https://github.com/your-username/ai-crypto-trader.git
+cd ai-crypto-trader
+
+2. Install dependencies
 
 
-3. Install dependencies:
 
 pip install -r requirements.txt
 
-
-4. Additional required packages for API and data handling:
-
-pip install sqlalchemy binance alpaca_trade_api pandas matplotlib seaborn scikit-learn joblib
-
-
-5. Set environment variables for API keys (example for Linux/macOS):
-
-export BINANCE_API_KEY=your_key
-export BINANCE_API_SECRET=your_secret
-export ALPACA_API_KEY=your_key
-export ALPACA_SECRET_KEY=your_secret
+3. Configure exchange keys
 
 
 
+# config/settings.yaml
+binance:
+  api_key: "YOUR_BINANCE_KEY"
+  api_secret: "YOUR_BINANCE_SECRET"
 
----
+alpaca:
+  api_key: "YOUR_ALPACA_KEY"
+  api_secret: "YOUR_ALPACA_SECRET"
 
-▶️ How to Run
+4. Run the bot
 
-Run the main trading bot:
 
-python src/app.py
 
-Run training pipeline on historical data:
-
-python train_pipeline.py --data_path data/historical_prices.csv --model_dir models
-
-Run inference/prediction on new data:
-
-python inference.py --data_path data/new_prices.csv --output_path predictions.csv
-
-Launch dashboard (Streamlit):
-
-streamlit run app.py
-
+python main.py --exchange binance --strategy moving_average
 
 
 ---
 
-✅ Testing
+🧠 Strategy System
 
-Install pytest for running tests:
+Strategies are pluggable via the strategies/ module. Example:
 
-pip install pytest
+class MovingAverageStrategy(BaseStrategy):
+    def generate_signal(self, data):
+        short_ma = data['close'].rolling(window=5).mean()
+        long_ma = data['close'].rolling(window=20).mean()
+        if short_ma[-1] > long_ma[-1]:
+            return "BUY"
+        elif short_ma[-1] < long_ma[-1]:
+            return "SELL"
+        return "HOLD"
 
-Run tests:
 
-pytest tests/
+---
+
+🛡️ Risk Management Example
+
+class RiskManager:
+    def apply(self, position, price):
+        if position.pnl_percent <= -5:
+            return "CLOSE"
+        elif position.pnl_percent >= 10:
+            return "TAKE_PROFIT"
+        return None
+
+
+---
+
+📊 Roadmap
+
+[x] Binance support
+
+[x] Alpaca support
+
+[x] Strategy plugin system
+
+[x] Order execution
+
+[ ] Live backtesting
+
+[ ] Performance dashboard
+
+[ ] Options trading support
 
 
 
@@ -111,22 +145,14 @@ pytest tests/
 
 📄 License
 
-Licensed under MIT License.
-
+MIT License. Use at your own risk. Crypto trading involves significant risk.
 
 
 ---
 
-If you want, I can help you:
+🤝 Contributions
 
-Set up this bot on your machine,
-
-Explain or customize any part of the code,
-
-Help with adding new strategies or integrating other exchanges,
-
-Or build related utilities like dashboard or training modules.
+Contributions welcome! Fork the repo and submit a PR.
 
 
-Just let me know!
-
+---
