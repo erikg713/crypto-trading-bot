@@ -1,37 +1,52 @@
 #!/bin/bash
 
-# Title: Start Script for Crypto Trading Bot
-# Description: Initializes environment, installs dependencies, and launches the bot.
+# ------------------------------------------
+# 🚀 Crypto Trading Bot Startup Script
+# ------------------------------------------
 
-echo "🚀 Starting Crypto Trading Bot..."
-
-# Fail on any error
+# Exit if any command fails
 set -e
 
-# Load environment variables from .env if exists
+# 1. Print header
+echo "=========================================="
+echo "🚀 Launching Crypto Trading Bot with Python"
+echo "=========================================="
+
+# 2. Load environment variables from .env
 if [ -f .env ]; then
-  echo "🔧 Loading environment variables..."
+  echo "🔧 Loading environment variables from .env..."
   export $(grep -v '^#' .env | xargs)
 else
-  echo "⚠️  .env file not found. Proceeding without loading environment variables."
+  echo "⚠️  .env file not found. Skipping environment loading."
 fi
 
-# Create virtual environment if not present
+# 3. Set up Python virtual environment
 if [ ! -d "venv" ]; then
-  echo "📦 Creating Python virtual environment..."
+  echo "📦 Creating new Python virtual environment..."
   python3 -m venv venv
 fi
 
-# Activate virtual environment
+echo "🐍 Activating virtual environment..."
 source venv/bin/activate
 
-# Install Python dependencies
-echo "📚 Installing dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
+# 4. Install Python dependencies
+if [ -f "requirements.txt" ]; then
+  echo "📚 Installing dependencies from requirements.txt..."
+  pip install --upgrade pip
+  pip install -r requirements.txt
+else
+  echo "❌ requirements.txt not found!"
+  exit 1
+fi
 
-# Run the trading bot
-echo "🤖 Launching bot..."
-python3 main.py
+# 5. Run the bot
+if [ -f "main.py" ]; then
+  echo "🤖 Starting trading bot..."
+  python3 main.py
+else
+  echo "❌ main.py not found. Please check your entry point."
+  exit 1
+fi
 
-# End of script
+# 6. Done
+echo "✅ Bot has stopped (or crashed). Check logs if needed."
