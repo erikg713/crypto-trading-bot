@@ -1,1 +1,5 @@
-
+# system_logs.txt
+# =================
+# This file stores system logs, including info, warnings, and errors.
+# Each entry format:
+# [YYYY-MM-DD HH:MM:SS] [LEVEL] Message
