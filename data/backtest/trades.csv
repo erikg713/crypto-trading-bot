@@ -1,1 +1,4 @@
-
+trade_id,timestamp,symbol,side,entry_price,exit_price,quantity,pnl,holding_time,strategy
+1,2025-08-01 09:30:00,BTCUSDT,BUY,65000,65500,0.05,25.0,5m,moving_average
+2,2025-08-01 10:15:00,ETHUSDT,SELL,3500,3480,1.2,24.0,30m,rsi
+3,2025-08-02 11:00:00,BTCUSDT,BUY,65200,64900,0.03,-9.0,10m,moving_average
