@@ -8,7 +8,7 @@ volumes = np.random.uniform(100, 200, size=days)
   
 # Create DataFrame  
 df = pd.DataFrame({  
-    "timestamp": [dt.strftime("%Y-%m-%d %H:%M:%S") for dt in dates],  
+    "timestamp": [dt.strftime for dt in dates],  
     "open": np.round(open_prices, 2),  
     "high": np.round(high_prices, 2),  
     "low": np.round(low_prices, 2),  
