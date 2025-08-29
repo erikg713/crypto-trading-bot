@@ -1,0 +1,7 @@
+{
+  "symbols": ["BTCUSDT", "ETHUSDT", "SOLUSDT"],
+  "exchange": "binance",
+  "granularity": "1h",
+  "timezone": "UTC",
+  "last_updated": "2025-08-28T00:00:00Z"
+}
