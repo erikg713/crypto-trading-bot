@@ -13,7 +13,30 @@ Features:
 
 from typing import List, Optional
 import pandas as pd
+import pandas as pd
+from strategies.base_strategy import BaseStrategy
 
+class MovingAverageStrategy(BaseStrategy):
+    def __init__(self, short_window=5, long_window=20):
+        self.short_window = short_window
+        self.long_window = long_window
+
+    def generate_signal(self, df: pd.DataFrame):
+        """
+        Returns: signal ("BUY", "SELL", "HOLD") and strategy params
+        """
+        df = df.copy()
+        df["short_ma"] = df["close"].rolling(window=self.short_window).mean()
+        df["long_ma"] = df["close"].rolling(window=self.long_window).mean()
+
+        signal = "HOLD"
+        if df["short_ma"].iloc[-1] > df["long_ma"].iloc[-1]:
+            signal = "BUY"
+        elif df["short_ma"].iloc[-1] < df["long_ma"].iloc[-1]:
+            signal = "SELL"
+
+        strategy_params = {"short_ma": df["short_ma"].iloc[-1], "long_ma": df["long_ma"].iloc[-1]}
+        return signal, strategy_params
 
 def simple_moving_average(prices: List[float], period: int) -> List[float]:
     """
