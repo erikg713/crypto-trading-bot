@@ -1,20 +1,4 @@
-# Generate price data  
-base_price = 30000  
-open_prices = [base_price + np.random.normal(0, 500) for _ in range(days)]  
-high_prices = [open + np.random.uniform(100, 500) for open in open_prices]  
-low_prices = [open - np.random.uniform(100, 500) for open in open_prices]  
-close_prices = [np.random.uniform(low, high) for low, high in zip(low_prices, high_prices)]  
-volumes = np.random.uniform(100, 200, size=days)  
-  
-# Create DataFrame  
-df = pd.DataFrame({  
-    "timestamp": [dt.strftime for dt in dates],  
-    "open": np.round(open_prices, 2),  
-    "high": np.round(high_prices, 2),  
-    "low": np.round(low_prices, 2),  
-    "close": np.round(close_prices, 2),  
-    "volume": np.round(volumes, 2)  
-})  
-  
-# Display a sample and save to file path  
-df.head(), df.to_csv("/mnt/data/historical_prices.csv", index=False)
+timestamp	open	high	low	close	volume
+
+2024-07-01 00:00:00	30012.5	30450.1	29650.3	30234.7	150.23
+2024-07-02 00:00:00	...	...	...	...	...
